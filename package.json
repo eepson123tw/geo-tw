@@ -22,8 +22,12 @@
     "@visx/zoom": "^3.3.0",
     "d3-geo": "link:@visx/vendor/d3-geo",
     "react": "^18.2.0",
+    "react-chartjs-2": "4.3.1",
     "react-dom": "^18.2.0",
-    "topojson-client": "^3.1.0"
+    "react-google-charts": "^4.0.1",
+    "topojson-client": "^3.1.0",
+    "chart.js": "3.9.1",
+    "chartjs-chart-geo": "3.9.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

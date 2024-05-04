@@ -1,13 +1,35 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import GEO from "./geo";
+import GEO from "./components/geo";
+import GeoGoogleChart from "./components/geo-google-chart";
+import GeoReactCharts from "./components/geo-react-chart";
 
 const GEOTW = () => {
   return (
     <>
       <h2>Visx</h2>
-      <p>並非最新圖資</p>
+      <p>並非最新圖資,需自行取得圖資</p>
       <GEO width={500} height={500}></GEO>
+    </>
+  );
+};
+
+const GoogleTWGEO = () => {
+  return (
+    <>
+      <h2>Google Chart</h2>
+      <p>最新圖資(花錢解鎖)</p>
+      <GeoGoogleChart></GeoGoogleChart>
+    </>
+  );
+};
+
+const GeoReactChart = () => {
+  return (
+    <>
+      <h2>Visx</h2>
+      <p>並非最新圖資,需自行取得圖資</p>
+      <GeoReactCharts></GeoReactCharts>
     </>
   );
 };
@@ -36,8 +58,16 @@ function App() {
       <div className="btn-list">
         <button onClick={() => setOptionState("default")}>Default</button>
         <button onClick={() => setOptionState("visx-tw")}>Visx</button>
+        <button onClick={() => setOptionState("google-geo")}>GoogleTW</button>
+        <button onClick={() => setOptionState("react-chart-geo")}>
+          ReactGeo
+        </button>
       </div>
       {optionState === "visx-tw" ? <GEOTW></GEOTW> : null}
+      {optionState === "google-geo" ? <GoogleTWGEO></GoogleTWGEO> : null}
+      {optionState === "react-chart-geo" ? (
+        <GeoReactChart></GeoReactChart>
+      ) : null}
     </div>
   );
 }
