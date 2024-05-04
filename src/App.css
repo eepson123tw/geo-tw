@@ -1,8 +1,24 @@
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  box-sizing: border-box;
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+}
+
+h1 {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+h2 {
+  font-size: 1.5em;
+  margin: 10px 0;
 }
 
 .logo {
@@ -39,4 +55,8 @@
 
 .read-the-docs {
   color: #888;
+}
+
+.btn-list > * {
+  margin: 0 0.5rem;
 }
