@@ -4,7 +4,7 @@ import { Zoom } from "@visx/zoom";
 import { geoCentroid } from "@visx/vendor/d3-geo";
 import { LegendOrdinal, LegendItem, LegendLabel } from "@visx/legend";
 import * as topojson from "topojson-client";
-import topology from "@assets/taiwan-topo.json";
+import topology from "@assets/taiwn-city-topo.json";
 import React from "react";
 
 export const background = "#f9f7e8";
@@ -19,40 +19,28 @@ interface FeatureShape {
   type: "Feature";
   id: string;
   geometry: { coordinates: [number, number][][]; type: "Polygon" };
-  properties: { name: string; "woe-name": string };
+  properties: { name: string; COUNTYNAME: string };
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
-const world = topojson.feature(topology, topology.objects.default) as {
+const world = topojson.feature(topology, topology.objects.counties) as {
   type: "FeatureCollection";
   features: FeatureShape[];
 };
 
-const color = scaleQuantize({
-  domain: [
-    Math.min(...world.features.map((f) => f.geometry.coordinates.length)),
-    Math.max(...world.features.map((f) => f.geometry.coordinates.length)),
-  ],
-  range: [
-    "#ffb01d",
-    "#ffa020",
-    "#ff9221",
-    "#ff8424",
-    "#ff7425",
-    "#fc5e2f",
-    "#f94b3a",
-    "#f63a48",
-  ],
-});
-
 const GEOLegend = (data: { data: typeof world }) => {
   const glyphSize = 20;
+
+  const textOrder = (text: string) => {
+    const matchResult = text && text.match(/[\d]+/g);
+    return matchResult ? Number(matchResult[0]) : 0;
+  };
 
   const labelAry = new Set(
     data.data.features
       .map((f) => "城市複雜度 => " + f.geometry.coordinates.length)
-      .sort()
+      .sort((a, b) => textOrder(a) - textOrder(b))
   );
 
   const ordinalColorScale = scaleOrdinal({
@@ -118,6 +106,22 @@ export default function GEO({ width, height }: GeoMercatorProps) {
   const centerY = height / 2;
   const scale = 4600;
 
+  const color = scaleQuantize({
+    domain: [
+      Math.min(...world.features.map((f) => f.geometry.coordinates.length)),
+      Math.max(...world.features.map((f) => f.geometry.coordinates.length)),
+    ],
+    range: [
+      "#ffb01d",
+      "#ffa020",
+      "#ff9221",
+      "#ff8424",
+      "#ff7425",
+      "#fc5e2f",
+      "#f94b3a",
+      "#f63a48",
+    ],
+  });
   return width < 10 ? null : (
     <div
       style={{
@@ -196,7 +200,7 @@ export default function GEO({ width, height }: GeoMercatorProps) {
                             fontSize={3}
                             textAnchor="middle"
                           >
-                            {feature.properties.name}
+                            {feature.properties.COUNTYNAME}
                           </text>
                         </React.Fragment>
                       )
