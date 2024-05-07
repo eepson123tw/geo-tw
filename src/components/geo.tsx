@@ -4,7 +4,7 @@ import { Zoom } from "@visx/zoom";
 import { geoCentroid } from "@visx/vendor/d3-geo";
 import { LegendOrdinal, LegendItem, LegendLabel } from "@visx/legend";
 import * as topojson from "topojson-client";
-import topology from "@assets/taiwn-city-topo.json";
+import topology from "@assets/taiwan-city-topo.json";
 import React from "react";
 
 export const background = "#f9f7e8";

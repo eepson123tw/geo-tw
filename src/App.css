@@ -60,3 +60,28 @@ h2 {
 .btn-list > * {
   margin: 0 0.5rem;
 }
+
+.mapMainContainer {
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+  width: 80%;
+  margin: auto;
+}
+
+.buttonWrapper {
+  display: flex;
+  padding-bottom: 10px;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.backButton {
+  height: 40px;
+  font-size: 14px;
+}
+
+.map {
+  height: 100%;
+  width: 100%;
+}

@@ -3,6 +3,7 @@ import "./App.css";
 import GEO from "./components/geo";
 import GeoGoogleChart from "./components/geo-google-chart";
 import GeoReactCharts from "./components/geo-react-chart";
+import ReactLeaflet from "./components/react-leaflet";
 
 const GEOTW = () => {
   return (
@@ -30,6 +31,16 @@ const GeoReactChart = () => {
       <h2>Visx</h2>
       <p>並非最新圖資,需自行取得圖資</p>
       <GeoReactCharts></GeoReactCharts>
+    </>
+  );
+};
+
+const ReactLeaf = () => {
+  return (
+    <>
+      <h2>ReactLeaflet</h2>
+      <p>並非最新圖資,需自行取得圖資</p>
+      <ReactLeaflet></ReactLeaflet>
     </>
   );
 };
@@ -62,12 +73,16 @@ function App() {
         <button onClick={() => setOptionState("react-chart-geo")}>
           ReactGeo
         </button>
+        <button onClick={() => setOptionState("react-leaf-let")}>
+          ReactLeaflet
+        </button>
       </div>
       {optionState === "visx-tw" ? <GEOTW></GEOTW> : null}
       {optionState === "google-geo" ? <GoogleTWGEO></GoogleTWGEO> : null}
       {optionState === "react-chart-geo" ? (
         <GeoReactChart></GeoReactChart>
       ) : null}
+      {optionState === "react-leaf-let" ? <ReactLeaf></ReactLeaf> : null}
     </div>
   );
 }
