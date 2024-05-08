@@ -1,10 +1,10 @@
 import { type RefObject, useEffect, useRef, useState } from "react";
-import { GeoJSON, MapContainer, ScaleControl } from "react-leaflet";
+import { GeoJSON, MapContainer, ScaleControl, useMap } from "react-leaflet";
 import * as topojson from "topojson-client";
 import taiwan from "@assets/taiwan-city-topo.json";
 import "leaflet/dist/leaflet.css";
 import center from "@turf/center";
-import L, { LeafletEvent } from "leaflet";
+import L, { LeafletEvent, Control } from "leaflet";
 
 function getColor(d: number) {
   return d > 25
@@ -18,6 +18,43 @@ function getColor(d: number) {
     : d > 5
     ? "#FED976"
     : "#FFEDA0";
+}
+
+function Legend() {
+  const map = useMap();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    if (!mounted) {
+      setMounted(true);
+    }
+    if (map && mounted) {
+      const legend = new Control({ position: "bottomright" });
+      legend.onAdd = () => {
+        const div = L.DomUtil.create("div", "info legend");
+        const grades = [0, 10, 20, 50, 100, 200, 500, 1000];
+        const labels = [];
+        let from;
+        let to;
+
+        for (let i = 0; i < grades.length; i++) {
+          from = grades[i];
+          to = grades[i + 1];
+          labels.push(
+            '<i style="background:' +
+              getColor(from + 1) +
+              '"></i> ' +
+              from +
+              (to ? "&ndash;" + to : "+")
+          );
+        }
+        div.innerHTML = labels.join("<br>");
+        return div;
+      };
+      legend.addTo(map);
+    }
+  }, [map, mounted]);
+  return null;
 }
 
 function layersUtils(
@@ -120,6 +157,7 @@ export default function ChoroplethMapDrillDown() {
           onEachFeature={onEachFeature}
         />
         <ScaleControl />
+        <Legend />
       </MapContainer>
     </div>
   );
