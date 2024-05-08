@@ -96,7 +96,7 @@ function geoJSONStyle() {
   };
 }
 
-export default function ChoroplethMapDrillDown() {
+export default function ReactLeafLet() {
   const [geoJsonId, setGeoJsonId] = useState("");
 
   const geoJson = topojson.feature(
