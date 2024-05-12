@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import DropDragGrid from "@/pages/grid-layout";
 import GEO from "./components/geo";
 import GeoGoogleChart from "./components/geo-google-chart";
 import GeoReactCharts from "./components/geo-react-chart";
@@ -64,6 +65,15 @@ const ReactSimpleChart = () => {
   );
 };
 
+const defaultProps = {
+  className: "layout",
+  rowHeight: 30,
+  onLayoutChange: (layout: any, layouts: any) => {},
+  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 },
+  breakpoints: { lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 },
+  containerPadding: [0, 0],
+};
+
 function App() {
   const [optionState, setOptionState] = useState("");
 
@@ -80,34 +90,41 @@ function App() {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        height: "100vh",
         width: "100vw",
+        height: "100vh",
       }}
     >
       <h1>GEO TW</h1>
-      <div className="btn-list">
-        <button onClick={() => setOptionState("default")}>Default</button>
-        <button onClick={() => setOptionState("visx-tw")}>Visx</button>
-        <button onClick={() => setOptionState("google-geo")}>GoogleTW</button>
-        <button onClick={() => setOptionState("react-chart-geo")}>
-          ReactGeo
-        </button>
-        <button onClick={() => setOptionState("react-leaf-let")}>
-          ReactLeaflet
-        </button>
-        <button onClick={() => setOptionState("react-simple-map")}>
-          ReactSimpleMap
-        </button>
+      <DropDragGrid {...defaultProps}></DropDragGrid>
+      <div
+        style={{
+          display: "none",
+        }}
+      >
+        <div className="btn-list">
+          <button onClick={() => setOptionState("default")}>Default</button>
+          <button onClick={() => setOptionState("visx-tw")}>Visx</button>
+          <button onClick={() => setOptionState("google-geo")}>GoogleTW</button>
+          <button onClick={() => setOptionState("react-chart-geo")}>
+            ReactGeo
+          </button>
+          <button onClick={() => setOptionState("react-leaf-let")}>
+            ReactLeaflet
+          </button>
+          <button onClick={() => setOptionState("react-simple-map")}>
+            ReactSimpleMap
+          </button>
+        </div>
+        {optionState === "visx-tw" ? <GEOTW></GEOTW> : null}
+        {optionState === "google-geo" ? <GoogleTWGEO></GoogleTWGEO> : null}
+        {optionState === "react-chart-geo" ? (
+          <GeoReactChart></GeoReactChart>
+        ) : null}
+        {optionState === "react-leaf-let" ? <ReactLeaf></ReactLeaf> : null}
+        {optionState === "react-simple-map" ? (
+          <ReactSimpleChart></ReactSimpleChart>
+        ) : null}
       </div>
-      {optionState === "visx-tw" ? <GEOTW></GEOTW> : null}
-      {optionState === "google-geo" ? <GoogleTWGEO></GoogleTWGEO> : null}
-      {optionState === "react-chart-geo" ? (
-        <GeoReactChart></GeoReactChart>
-      ) : null}
-      {optionState === "react-leaf-let" ? <ReactLeaf></ReactLeaf> : null}
-      {optionState === "react-simple-map" ? (
-        <ReactSimpleChart></ReactSimpleChart>
-      ) : null}
     </div>
   );
 }
