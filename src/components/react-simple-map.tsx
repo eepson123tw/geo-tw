@@ -12,7 +12,7 @@ import topology from "@assets/taiwan-city-topo.json";
 const chartData = [topology];
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function MapChart({ listVisited }: { listVisited: any }) {
+export default function MapChart({ listVisited }: { listVisited?: any }) {
   const getGeoBackgroundColor = (index: string) => {
     const data = province.find((e) => e.id === index);
     const { city } = data || {};

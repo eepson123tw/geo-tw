@@ -17,22 +17,22 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 const DropDragGrid: React.FC<GridProps> = (props) => {
   const [layouts, setLayouts] = useState<{ [index: string]: unknown[] }>({
-    lg: _.map(_.range(0, 25), function (item, i) {
-      const y = Math.ceil(Math.random() * 4) + 1;
+    lg: _.map(_.range(0, 5), function (item, i) {
       return {
-        x: (_.random(0, 5) * 2) % 12,
-        y: Math.floor(i / 6) * y,
-        w: 2,
-        h: y,
+        x: i % 2 === 0 ? 0 : 5,
+        y: i * 3,
+        w: 5,
+        h: 6,
         i: i.toString(),
-        static: Math.random() < 0.05,
+        static: false,
       };
     }),
   });
+  console.log(layouts);
   const [currentBreakpoint, setCurrentBreakpoint] = useState<string>("lg");
   const [compactType, setCompactType] = useState<string | null>("vertical");
   const [mounted, setMounted] = useState(false);
-  const [toolbox, setToolbox] = useState<{ [index: string]: any[] }>({
+  const [toolbox, setToolbox] = useState<{ [index: string]: unknown[] }>({
     lg: [],
   });
 

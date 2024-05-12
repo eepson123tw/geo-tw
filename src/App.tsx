@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import DropDragGrid from "@/pages/grid-layout";
-import GEO from "./components/geo";
-import GeoGoogleChart from "./components/geo-google-chart";
-import GeoReactCharts from "./components/geo-react-chart";
-import ReactLeaflet from "./components/react-leaflet";
-import ReactSimpleMap from "./components/react-simple-map";
 
+import GEO from "@/components/geo";
+import GeoGoogleChart from "@/components/geo-google-chart";
+import GeoReactCharts from "@/components/geo-react-chart";
+import ReactLeaflet from "@/components/react-leaflet";
+import ReactSimpleMap from "@/components/react-simple-map";
 const GEOTW = () => {
   return (
     <>
@@ -68,7 +68,6 @@ const ReactSimpleChart = () => {
 const defaultProps = {
   className: "layout",
   rowHeight: 30,
-  onLayoutChange: (layout: any, layouts: any) => {},
   cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 },
   breakpoints: { lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 },
   containerPadding: [0, 0],
@@ -95,12 +94,7 @@ function App() {
       }}
     >
       <h1>GEO TW</h1>
-      <DropDragGrid {...defaultProps}></DropDragGrid>
-      <div
-        style={{
-          display: "none",
-        }}
-      >
+      <div>
         <div className="btn-list">
           <button onClick={() => setOptionState("default")}>Default</button>
           <button onClick={() => setOptionState("visx-tw")}>Visx</button>
@@ -125,6 +119,9 @@ function App() {
           <ReactSimpleChart></ReactSimpleChart>
         ) : null}
       </div>
+      {optionState === "default" && (
+        <DropDragGrid {...defaultProps}></DropDragGrid>
+      )}
     </div>
   );
 }

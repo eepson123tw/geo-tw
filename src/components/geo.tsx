@@ -10,8 +10,8 @@ import React from "react";
 export const background = "#f9f7e8";
 
 export type GeoMercatorProps = {
-  width: number;
-  height: number;
+  width?: number;
+  height?: number;
   events?: boolean;
 };
 
@@ -101,7 +101,7 @@ const GEOLegend = (data: { data: typeof world }) => {
   );
 };
 
-export default function GEO({ width, height }: GeoMercatorProps) {
+export default function GEO({ width = 500, height = 500 }: GeoMercatorProps) {
   const centerX = width / 2;
   const centerY = height / 2;
   const scale = 4600;

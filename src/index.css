@@ -78,8 +78,8 @@ button:focus-visible {
 
 /* gird layout */
 .grid-container {
-  width: 80%;
-  height: 600px;
+  width: 95%;
+  height: 1200px;
   background: #fdd;
   overflow: hidden;
 }
