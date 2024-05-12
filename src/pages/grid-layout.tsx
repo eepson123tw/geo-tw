@@ -28,7 +28,7 @@ const DropDragGrid: React.FC<GridProps> = (props) => {
       static: boolean;
     }[];
   }>({
-    lg: _.map(_.range(0, 5), function (item, i) {
+    lg: _.map(_.range(0, 5), function (_item, i) {
       return {
         x: i % 2 === 0 ? 0 : 5,
         y: i * 3,
@@ -41,7 +41,7 @@ const DropDragGrid: React.FC<GridProps> = (props) => {
   });
   console.log(layouts);
   const [currentBreakpoint, setCurrentBreakpoint] = useState<string>("lg");
-  const [compactType, setCompactType] = useState<string | null>("vertical");
+  // const [compactType, setCompactType] = useState<string | null>("vertical");
   const [mounted, setMounted] = useState(false);
   const [toolbox, setToolbox] = useState<{ [index: string]: unknown[] }>({
     lg: [],
@@ -59,24 +59,24 @@ const DropDragGrid: React.FC<GridProps> = (props) => {
     });
   };
 
-  const onCompactTypeChange = () => {
-    // eslint-disable-next-line prefer-const
-    let oldCompactType = "";
+  // const onCompactTypeChange = () => {
+  //   // eslint-disable-next-line prefer-const
+  //   let oldCompactType = "";
 
-    const compactType =
-      oldCompactType === "horizontal"
-        ? "vertical"
-        : oldCompactType === "vertical"
-        ? null
-        : "horizontal";
-    setCompactType(compactType);
-  };
+  //   const compactType =
+  //     oldCompactType === "horizontal"
+  //       ? "vertical"
+  //       : oldCompactType === "vertical"
+  //       ? null
+  //       : "horizontal";
+  //   setCompactType(compactType);
+  // };
 
-  const onLayoutChange = (layout: any, layouts: any) => {
+  const onLayoutChange = (_layout: any, layouts: any) => {
     setLayouts({ ...layouts });
   };
 
-  const onDrop = (layout: any, layoutItem: any, _ev: any) => {
+  const onDrop = (_layout: any, layoutItem: any, _ev: any) => {
     alert(
       `Element parameters:\n${JSON.stringify(
         layoutItem,
@@ -118,8 +118,8 @@ const DropDragGrid: React.FC<GridProps> = (props) => {
           layouts={layouts}
           measureBeforeMount={false}
           useCSSTransforms={mounted}
-          compactType={compactType}
-          preventCollision={!compactType}
+          // compactType={compactType}
+          // preventCollision={!compactType}
           onLayoutChange={onLayoutChange}
           onBreakpointChange={onBreakpointChange}
           onDrop={onDrop}
