@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 import { Responsive, WidthProvider } from "react-grid-layout";
 import "react-grid-layout/css/styles.css";
@@ -16,7 +18,16 @@ interface GridProps {
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 const DropDragGrid: React.FC<GridProps> = (props) => {
-  const [layouts, setLayouts] = useState<{ [index: string]: unknown[] }>({
+  const [layouts, setLayouts] = useState<{
+    [index: string]: {
+      x: number;
+      y: number;
+      w: number;
+      h: number;
+      i: string;
+      static: boolean;
+    }[];
+  }>({
     lg: _.map(_.range(0, 5), function (item, i) {
       return {
         x: i % 2 === 0 ? 0 : 5,
