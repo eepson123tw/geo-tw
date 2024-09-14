@@ -186,7 +186,7 @@ export default function ReactLeafLet({
   propsStyle = { height: "100vh", width: "100%" },
 }: {
   mapData: OrganizedAddresses;
-  propsStyle: { height: string; width: string };
+  propsStyle?: { height: string; width: string };
 }) {
   const [geoJsonId, setGeoJsonId] = useState<string>("");
 
