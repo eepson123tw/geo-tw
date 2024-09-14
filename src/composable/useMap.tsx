@@ -17,7 +17,9 @@ interface OrganizedAddresses {
 }
 
 const getData = async (): Promise<BadmintonMap[]> => {
-  const res = await fetch("/api/badminton/allCourtAndPost", {});
+  const res = await fetch(
+    `${import.meta.env.VITE_API_BASE_URL}/badminton/allCourtAndPost`
+  );
   const data = await res.json();
   return data;
 };
