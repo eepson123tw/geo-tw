@@ -111,7 +111,7 @@ function layersUtils(
   function highlightOnClick(e: LeafletEvent) {
     const layer = e.target as L.GeoJSON;
     layer.setStyle({
-      weight: 2,
+      weight: 0.1,
       dashArray: "",
       fillOpacity: 0.5,
     });
@@ -154,7 +154,7 @@ function geoJSONStyle(feature: any, mapData: OrganizedAddresses) {
   const value = findCityAndSumVenues(feature, mapData);
   return {
     color: "#1f2021",
-    weight: 1,
+    weight: 0.1,
     fillOpacity: 0.7,
     fillColor: getColor(value),
   };
