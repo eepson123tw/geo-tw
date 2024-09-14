@@ -183,8 +183,10 @@ function MarkerGroup({ addressesToShow }: { addressesToShow: Address[] }) {
 
 export default function ReactLeafLet({
   mapData,
+  propsStyle = { height: "100vh", width: "100%" },
 }: {
   mapData: OrganizedAddresses;
+  propsStyle: { height: string; width: string };
 }) {
   const [geoJsonId, setGeoJsonId] = useState<string>("");
 
@@ -266,7 +268,12 @@ export default function ReactLeafLet({
   }, [setGeoJsonId]);
 
   return (
-    <div className="mapMainContainer">
+    <div
+      className="mapMainContainer"
+      style={{
+        height: propsStyle.width === "100vw" ? "100vh" : "",
+      }}
+    >
       <div className="buttonWrapper">
         <button onClick={resetMapToCity} className="backButton">
           Back To Top View
@@ -277,7 +284,7 @@ export default function ReactLeafLet({
         center={mapCenter}
         ref={mapRef}
         zoom={7}
-        style={{ height: "100vh", width: "100%" }}
+        style={propsStyle}
       >
         <GeoJSON
           data={geoJson}

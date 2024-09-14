@@ -36,13 +36,13 @@ const Loading = () => {
 
 export default function Virtualization() {
   const { mapData } = useMap();
+  const propsStyle = {
+    height: "100vh",
+    width: "100vw",
+  };
   return (
     <div
       style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
         width: "100vw",
         height: "100vh",
       }}
@@ -50,7 +50,7 @@ export default function Virtualization() {
       {Object.keys(mapData).length === 0 ? (
         <Loading />
       ) : (
-        <ReactLeaflet mapData={mapData} />
+        <ReactLeaflet mapData={mapData} propsStyle={propsStyle} />
       )}
     </div>
   );
