@@ -39,7 +39,7 @@ const DropDragGrid: React.FC<GridProps> = (props) => {
       };
     }),
   });
-  console.log(layouts);
+  // console.log(layouts);
   const [currentBreakpoint, setCurrentBreakpoint] = useState<string>("lg");
   // const [compactType, setCompactType] = useState<string | null>("vertical");
   const [mounted, setMounted] = useState(false);

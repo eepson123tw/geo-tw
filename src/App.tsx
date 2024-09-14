@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import DropDragGrid from "@/pages/grid-layout";
 
+import useMap from "@/composable/useMap";
 import GEO from "@/components/geo";
 import GeoGoogleChart from "@/components/geo-google-chart";
 import GeoReactCharts from "@/components/geo-react-chart";
 import ReactLeaflet from "@/components/react-leaflet";
 import ReactSimpleMap from "@/components/react-simple-map";
+
 const GEOTW = () => {
   return (
     <>
@@ -38,11 +40,12 @@ const GeoReactChart = () => {
 };
 
 const ReactLeaf = () => {
+  const { mapData } = useMap();
   return (
     <>
       <h2>ReactLeaflet</h2>
       <p>並非最新圖資,需自行取得圖資</p>
-      <ReactLeaflet></ReactLeaflet>
+      <ReactLeaflet mapData={mapData}></ReactLeaflet>
     </>
   );
 };
@@ -78,7 +81,7 @@ function App() {
 
   useEffect(() => {
     if (optionState === "") {
-      setOptionState("visx-tw");
+      setOptionState("react-leaf-let");
     }
   }, [optionState]);
 

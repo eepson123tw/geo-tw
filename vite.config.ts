@@ -6,7 +6,14 @@ import { fileURLToPath, URL } from "url";
 export default defineConfig({
   plugins: [react()],
   server: {
-    port: 3000,
+    port: 8080,
+    proxy: {
+      "/api": {
+        target: "https://www.gurula.cc",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+    },
   },
   build: {
     outDir: "build",
