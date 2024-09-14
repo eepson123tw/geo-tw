@@ -1,9 +1,9 @@
 import { scaleQuantize, scaleOrdinal } from "@visx/scale";
 import { Mercator, Graticule } from "@visx/geo";
 import { Zoom } from "@visx/zoom";
-import { geoCentroid } from "d3-geo";
 import { LegendOrdinal, LegendItem, LegendLabel } from "@visx/legend";
 import * as topojson from "topojson-client";
+import { geoCentroid } from "d3-geo";
 import topology from "@assets/taiwan-city-topo.json";
 import React from "react";
 

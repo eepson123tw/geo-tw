@@ -6,19 +6,18 @@ const Loading = () => {
   const [progress, setProgress] = useState<number>(0);
 
   useEffect(() => {
-    // 模擬加載進度，每100毫秒增加1%
     const interval = setInterval(() => {
       setProgress((prev) => {
         const next = prev + 1;
         if (next > 100) {
-          clearInterval(interval); // 進度達到100%後停止
+          clearInterval(interval);
           return 100;
         }
         return next;
       });
-    }, 100); // 每100毫秒增加1%，總共10秒達到100%
+    }, 100);
 
-    return () => clearInterval(interval); // 清除定時器以防止內存泄漏
+    return () => clearInterval(interval);
   }, []);
 
   return (

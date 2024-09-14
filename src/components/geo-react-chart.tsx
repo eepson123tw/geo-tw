@@ -87,10 +87,6 @@ export default function GeoReactChart() {
             xy: {
               projection: "mercator",
             },
-            // Hide color scale
-            // color: {
-            //   display: false
-            // }
           },
         }}
       />

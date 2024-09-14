@@ -1,5 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { type RefObject, useEffect, useRef, useState } from "react";
+import {
+  type RefObject,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import {
   GeoJSON,
   MapContainer,
@@ -9,13 +15,13 @@ import {
   TileLayer,
   useMap,
 } from "react-leaflet";
+import L, { LeafletEvent, Control } from "leaflet";
 import * as topojson from "topojson-client";
+import center from "@turf/center";
 import taiwan from "@assets/taiwan-dist-topo.json";
 import "leaflet/dist/leaflet.css";
-import center from "@turf/center";
-import L, { LeafletEvent, Control } from "leaflet";
+
 import MarkerClusterGroup from "@/components/MakeClusterGroup";
-// import MarkerClusterGroup from "react-leaflet-markercluster";
 
 // 定義地址資料的接口
 interface Address {
@@ -82,11 +88,10 @@ function Legend() {
           from = grades[i];
           to = grades[i + 1];
           labels.push(
-            '<i style="background:' +
-              getColor(from + 1) +
-              '"></i> ' +
-              from +
-              (to ? "&ndash;" + to : "+")
+            `<i style="background:${getColor(from + 1)}"></i>
+            <span style="color:white;">${
+              from + (to ? "&ndash;" + to : "+")
+            } 成團數</span>`
           );
         }
         div.innerHTML = labels.join("<br>");
@@ -108,7 +113,7 @@ function layersUtils(
     layer.setStyle({
       weight: 2,
       dashArray: "",
-      fillOpacity: 0.7,
+      fillOpacity: 0.5,
     });
 
     if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
@@ -127,53 +132,41 @@ function layersUtils(
   return { highlightOnClick, resetHighlight, zoomToFeature };
 }
 
-// Function to find a matching city and sum its venues
 function findCityAndSumVenues(county: any, cities: CityObject) {
-  // Find a match based on the county name (case-insensitive match)
   const matchedCity = Object.keys(cities).find((cityName) =>
     cityName.includes(county.properties.COUNTYENG)
   );
 
   if (matchedCity) {
-    // Sum up all the venues across districts for the matched city
     const totalVenues = Object.values(cities[matchedCity]).reduce(
       (acc, districtVenues) => acc + districtVenues.length,
       0
     );
     return totalVenues;
   } else {
-    console.log("No matching city found.");
+    console.log(`No matching city found => ${county.properties.COUNTYENG}`);
   }
-
   return 0;
 }
 
 // 定義 GeoJSON 樣式函數
 function geoJSONStyle(feature: any, mapData: OrganizedAddresses) {
-  // 假設 feature.properties.value 是用來決定顏色的值
-  // 您需要根據實際屬性調整
   const value = findCityAndSumVenues(feature, mapData);
   return {
     color: "#1f2021",
     weight: 1,
-    fillOpacity: 0.5,
+    fillOpacity: 0.7,
     fillColor: getColor(value),
   };
 }
 
 function MarkerGroup({ addressesToShow }: { addressesToShow: Address[] }) {
-  const position = [51.505, -0.09] as [number, number];
   return (
     <>
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
       />
-      <Marker position={position}>
-        <Popup>
-          A pretty CSS3 popup. <br /> Easily customizable.
-        </Popup>
-      </Marker>
       <MarkerClusterGroup>
         {addressesToShow.map((address, idx) => (
           <Marker key={idx} position={[address.latitude, address.longitude]}>
@@ -199,7 +192,7 @@ export default function ReactLeafLet({
   const mapRef = useRef<L.Map>(null);
   const geoJsonRef = useRef<L.GeoJSON>(null);
 
-  // 定義 GeoJSON 數據
+  // 切換 GeoJSON 特徵
   const geoJson = geoJsonId
     ? topojson.feature(taiwan, {
         type: "GeometryCollection",
@@ -248,6 +241,7 @@ export default function ReactLeafLet({
 
   // 根據當前的 geoJsonId 獲取相應的地址
   let addressesToShow: Address[] = [];
+
   if (geoJsonId) {
     // 如果選中了某個城市，顯示該城市所有區域的地址
     const cityData = mapData[geoJsonId];
@@ -265,11 +259,17 @@ export default function ReactLeafLet({
     });
   }
 
+  const resetMapToCity = useCallback(() => {
+    if (!mapRef.current || !geoJsonRef.current) return;
+    setGeoJsonId("");
+    mapRef.current.fitBounds(geoJsonRef.current.getBounds());
+  }, [setGeoJsonId]);
+
   return (
     <div className="mapMainContainer">
       <div className="buttonWrapper">
-        <button onClick={() => setGeoJsonId("")} className="backButton">
-          Back To Country View
+        <button onClick={resetMapToCity} className="backButton">
+          Back To Top View
         </button>
       </div>
       <MapContainer

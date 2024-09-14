@@ -1,3 +1,4 @@
+// TODO: maybe use BE to parse address
 const knownCities = [
   "Taipei City",
   "New Taipei City",
@@ -8,12 +9,14 @@ const knownCities = [
   "Keelung City",
 ];
 
-export default function parseAddress(address: string): {
+interface ParseAddress {
   city?: string;
   district?: string;
   postalCode?: string;
   street?: string;
-} {
+}
+
+export default function parseAddress(address: string): ParseAddress {
   // 按逗號分割地址並去除空白
   const parts = address.split(",").map((part) => part.trim());
 
@@ -25,7 +28,6 @@ export default function parseAddress(address: string): {
   // 創建一個副本來標記哪些部分已被處理
   const processed = Array(parts.length).fill(false);
 
-  // 首先，尋找郵遞區號（3到5位數字）
   parts.forEach((part, index) => {
     const postalMatch = part.match(/(\d{3,5})/);
     if (postalMatch && !postalCode) {
@@ -34,7 +36,6 @@ export default function parseAddress(address: string): {
     }
   });
 
-  // 其次，尋找城市名稱
   knownCities.forEach((knownCity) => {
     const index = parts.findIndex((part) => part === knownCity);
     if (index !== -1 && !city) {

@@ -32,23 +32,19 @@ export default function useMap() {
     data.forEach((dataItem) => {
       const { address } = dataItem;
       const parsedData = parseAddress(address);
-      if (
-        parsedData.city &&
-        parsedData.district &&
-        parsedData.postalCode &&
-        parsedData.street
-      ) {
-        const city = parsedData.city;
-        const district = parsedData.district;
-        if (!organizedAddresses[city]) {
-          organizedAddresses[city] = {};
-        }
-        if (!organizedAddresses[city][district]) {
-          organizedAddresses[city][district] = [];
-        }
+      if (!parsedData.city || !parsedData.district) return;
 
-        organizedAddresses[city][district].push(dataItem);
+      const city = parsedData.city;
+      const district = parsedData.district;
+
+      if (!organizedAddresses[city]) {
+        organizedAddresses[city] = {};
       }
+
+      if (!organizedAddresses[city][district]) {
+        organizedAddresses[city][district] = [];
+      }
+      organizedAddresses[city][district].push(dataItem);
     });
     setMapData(organizedAddresses);
   }, [setMapData]);

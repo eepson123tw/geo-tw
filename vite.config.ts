@@ -10,6 +10,8 @@ export default defineConfig(({ mode }) => {
 
   const isDev = mode === "development";
 
+  console.log(env.VITE_API_BASE_URL);
+
   return {
     plugins: [react()],
     server: isDev
@@ -17,7 +19,7 @@ export default defineConfig(({ mode }) => {
           port: 8080,
           proxy: {
             "/api": {
-              target: env.VITE_API_BASE_URL,
+              target: "https://www.gurula.cc",
               changeOrigin: true,
               rewrite: (path) => path.replace(/^\/api/, ""),
             },
