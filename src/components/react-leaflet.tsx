@@ -91,7 +91,7 @@ function Legend() {
             `<i style="background:${getColor(from + 1)}"></i>
             <span style="color:white;">${
               from + (to ? "&ndash;" + to : "+")
-            } 成團數</span>`
+            } 球館數</span>`
           );
         }
         div.innerHTML = labels.join("<br>");
