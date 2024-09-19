@@ -274,11 +274,13 @@ export default function ReactLeafLet({
         height: propsStyle.width === "100vw" ? "100vh" : "",
       }}
     >
-      <div className="buttonWrapper">
-        <button onClick={resetMapToCity} className="backButton">
-          Back To Top View
-        </button>
-      </div>
+      {geoJsonId && (
+        <div className="buttonWrapper">
+          <button onClick={resetMapToCity} className="backButton">
+            Top View
+          </button>
+        </div>
+      )}
       <MapContainer
         className="map"
         center={mapCenter}
