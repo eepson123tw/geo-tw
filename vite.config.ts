@@ -19,7 +19,7 @@ export default defineConfig(({ mode }) => {
           port: 8080,
           proxy: {
             "/api": {
-              target: "https://www.gurula.cc",
+              target: "https://gurula.cc",
               changeOrigin: true,
               rewrite: (path) => path.replace(/^\/api/, ""),
             },
